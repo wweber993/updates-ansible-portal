@@ -1,0 +1,109 @@
+---
+- hosts: all
+  become: yes
+  gather_facts: yes
+
+  vars:
+    api_url: "http://ip-ou-dns:8000/api/v1/linux/update"
+    ambiente: "{{ awx_inventory_name }}"
+
+  tasks:
+
+    - name: Verificar se sistema usa APT
+      ansible.builtin.set_fact:
+        usa_apt: "{{ ansible_pkg_mgr == 'apt' }}"
+
+    - name: Verificar se sistema usa YUM/DNF
+      ansible.builtin.set_fact:
+        usa_yum: "{{ ansible_pkg_mgr in ['yum', 'dnf'] }}"
+
+    #### BLOCO APT ####
+    - block:
+        - name: Atualizar cache do APT
+          ansible.builtin.apt:
+            update_cache: yes
+            cache_valid_time: 3600
+
+        - name: Atualizar pacotes (upgrade normal)
+          ansible.builtin.apt:
+            upgrade: yes
+          register: apt_upgrade
+          ignore_errors: yes
+
+        - name: Atualização completa (dist-upgrade)
+          ansible.builtin.apt:
+            upgrade: dist
+          register: apt_dist_upgrade
+          ignore_errors: yes
+
+        - name: Remover pacotes não utilizados
+          ansible.builtin.apt:
+            autoremove: yes
+          ignore_errors: yes
+
+        - name: Definir lista de pacotes atualizados (APT)
+          ansible.builtin.set_fact:
+            updated_packages: "{{ (apt_upgrade.changes.packages | default([])) + (apt_dist_upgrade.changes.packages | default([])) }}"
+      when: usa_apt
+
+    #### BLOCO YUM/DNF ####
+    - block:
+        - name: Atualizar pacotes com YUM/DNF
+          ansible.builtin.yum:
+            name: "*"
+            state: latest
+          register: yum_update
+          ignore_errors: yes
+
+        - name: Obter histórico de updates (yum/dnf)
+          ansible.builtin.shell: |
+            yum history info | head -n 50 | grep -E 'Updated|Installed'
+          register: yum_history
+          changed_when: false
+          ignore_errors: yes
+
+        - name: Definir lista de pacotes atualizados (YUM/DNF)
+          ansible.builtin.set_fact:
+            updated_packages: "{{ yum_history.stdout_lines | default([]) }}"
+      when: usa_yum
+
+    #### DEFINIR STATUS ####
+    - name: Definir status do update
+      ansible.builtin.set_fact:
+        update_status: >-
+          {% if updated_packages | length > 0 %}
+            SUCCESS
+          {% else %}
+            NO_UPDATES_FOUND
+          {% endif %}
+
+    #### ENVIAR PARA API ####
+    - name: Enviar resultado para API
+      ansible.builtin.uri:
+        url: "{{ api_url }}"
+        method: POST
+        body_format: json
+        body:
+          server_name: "{{ inventory_hostname }}"
+          ip_address: "{{ ansible_default_ipv4.address | default('0.0.0.0') }}"
+          update_status: "{{ update_status }}"
+          report_timestamp: "{{ ansible_date_time.iso8601 }}"
+          ambiente: "{{ ambiente }}"
+          installed_packages: "{{ updated_packages | default([]) }}"
+        status_code: [200,201]
+      register: api_response
+      ignore_errors: yes
+
+    - name: Mostrar resposta da API
+      ansible.builtin.debug:
+        var: api_response
+
+    #### REBOOT ####
+    - name: Reboot após atualizações
+      ansible.builtin.reboot:
+        msg: "Reboot iniciado pelo Ansible após atualizações"
+        connect_timeout: 5
+        reboot_timeout: 900
+        post_reboot_delay: 30
+        test_command: uptime
+      ignore_errors: yes
