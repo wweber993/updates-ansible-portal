@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Por Servidor</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="/static/js/app.js"></script>
+</head>
+<body class="p-4">
+  <h1 class="text-2xl font-semibold mb-4">🖥️ Por Servidor</h1>
+
+  <div class="bg-white rounded shadow p-3 mb-3">
+    <input id="q" class="w-full border p-2 rounded" placeholder="Buscar por servidor, ambiente ou status..." />
+  </div>
+
+  <div class="overflow-auto bg-white rounded shadow">
+    <table class="min-w-full text-sm">
+      <thead class="bg-gray-50">
+        <tr>
+          <th class="text-left p-2">Servidor</th>
+          <th class="text-left p-2">Ambiente</th>
+          <th class="text-left p-2">SO</th>
+          <th class="text-left p-2">Status</th>
+          <th class="text-left p-2">Data</th>
+          <th class="text-left p-2">Updates</th>
+        </tr>
+      </thead>
+      <tbody id="tbody"></tbody>
+    </table>
+  </div>
+
+  <script>
+    (async () => {
+      const { items } = await fetchAllData();
+      const tbody = document.getElementById('tbody');
+      const q = document.getElementById('q');
+
+      function row(x) {
+        const soIcon = (x.so || "").toLowerCase() === "windows" ? "🪟" : ((x.so || "").toLowerCase() === "linux" ? "🐧" : "—");
+        const updates = ((x.installed_kbs && x.installed_kbs.length) ? x.installed_kbs.join(", ")
+                      : (x.installed_packages && x.installed_packages.length) ? x.installed_packages.join(", ")
+                      : "—");
+        return `<tr class="border-t">
+          <td class="p-2">${x.server_name || "—"}</td>
+          <td class="p-2">${x.ambiente || "—"}</td>
+          <td class="p-2">${soIcon} ${x.so || "—"}</td>
+          <td class="p-2">${x.update_status || "—"}</td>
+          <td class="p-2">${brDate(x.report_timestamp)}</td>
+          <td class="p-2">${updates}</td>
+        </tr>`;
+      }
+
+      function render() {
+        const filtered = filterByQuery(items, q.value, ["server_name","ambiente","update_status"]);
+        tbody.innerHTML = filtered.map(row).join("");
+      }
+
+      q.addEventListener('input', render);
+      render();
+    })();
+  </script>
+</body>
+</html>

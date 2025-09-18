@@ -1,0 +1,54 @@
+[
+  {
+    "server_name": "srv-048",
+    "ip_address": "192.168.31.235",
+    "update_status": "SUCCESS",
+    "installed_kbs": [
+      "KB503985"
+    ],
+    "error_details": null,
+    "report_timestamp": "2025-09-09T04:55:01Z",
+    "server_received_at": "2025-09-09T04:55:01-03:00",
+    "ambiente": "LAB",
+    "so": "Linux"
+  },
+  {
+    "server_name": "srv-048",
+    "ip_address": "192.168.7.49",
+    "update_status": "NO_UPDATES_FOUND",
+    "installed_kbs": [
+      "KB501431"
+    ],
+    "error_details": null,
+    "report_timestamp": "2025-09-16T05:55:01Z",
+    "server_received_at": "2025-09-16T05:55:01-03:00",
+    "ambiente": "LAB",
+    "so": "Windows"
+  },
+  {
+    "server_name": "srv-048",
+    "ip_address": "192.168.27.122",
+    "update_status": "SUCCESS",
+    "installed_kbs": [
+      "KB503806"
+    ],
+    "error_details": "Timeout installing updates",
+    "report_timestamp": "2025-09-12T06:55:01Z",
+    "server_received_at": "2025-09-12T06:55:01-03:00",
+    "ambiente": "DEV",
+    "so": "Windows"
+  },
+  {
+    "server_name": "srv-048",
+    "ip_address": "192.168.14.129",
+    "update_status": "NO_UPDATES_FOUND",
+    "installed_kbs": [
+      "KB502669"
+    ],
+    "error_details": "Timeout installing updates",
+    "report_timestamp": "2025-09-13T23:55:01Z",
+    "server_received_at": "2025-09-13T23:55:01-03:00",
+    "ambiente": "HOMOLOG",
+    "so": "Windows"
+  }
+]

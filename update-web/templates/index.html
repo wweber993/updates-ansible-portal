@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Portal de Atualizações</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    html, body { height: 100%; }
+    #pageFrame { width: 100%; height: 100%; border: 0; }
+  </style>
+  <script>
+    function loadPage(path) {
+      const frame = document.getElementById('pageFrame');
+      frame.src = path;
+      // marca item ativo
+      document.querySelectorAll('[data-menu]').forEach(el => el.classList.remove('bg-gray-800'));
+      const active = document.querySelector(`[data-menu="${path}"]`);
+      if (active) active.classList.add('bg-gray-800');
+    }
+    window.addEventListener('DOMContentLoaded', () => {
+      loadPage('/static/pages/dashboard.html');
+    });
+  </script>
+</head>
+<body class="bg-gray-100 h-full">
+  <div class="h-full flex">
+    <!-- Sidebar -->
+    <aside class="w-64 bg-gray-900 text-gray-100 flex flex-col">
+      <div class="px-4 py-4 text-lg font-semibold border-b border-gray-800">
+        Portal de Atualizações
+      </div>
+      <nav class="p-3 space-y-1 overflow-y-auto">
+        <button data-menu="/static/pages/dashboard.html" onclick="loadPage('/static/pages/dashboard.html')" class="w-full text-left px-3 py-2 rounded hover:bg-gray-800">📊 Dashboard</button>
+        <button data-menu="/static/pages/reports.html" onclick="loadPage('/static/pages/reports.html')" class="w-full text-left px-3 py-2 rounded hover:bg-gray-800">🖥️ Por Servidor</button>
+        <button data-menu="/static/pages/ambientes.html" onclick="loadPage('/static/pages/ambientes.html')" class="w-full text-left px-3 py-2 rounded hover:bg-gray-800">🏢 Por Ambiente</button>
+        <button data-menu="/static/pages/periodo.html" onclick="loadPage('/static/pages/periodo.html')" class="w-full text-left px-3 py-2 rounded hover:bg-gray-800">📆 Por Período</button>
+        <button data-menu="/static/pages/so.html" onclick="loadPage('/static/pages/so.html')" class="w-full text-left px-3 py-2 rounded hover:bg-gray-800">💻 Por Sistema Operacional</button>
+        <button data-menu="/static/pages/checa_janela.html" onclick="loadPage('/static/pages/checa_janela.html')" class="w-full text-left px-3 py-2 rounded hover:bg-gray-800">🔍 Checar Janela</button>
+        <button data-menu="/static/pages/falhas.html" onclick="loadPage('/static/pages/falhas.html')" class="w-full text-left px-3 py-2 rounded hover:bg-gray-800">❌ Falhas</button>
+        <button data-menu="/static/pages/historico.html" onclick="loadPage('/static/pages/historico.html')" class="w-full text-left px-3 py-2 rounded hover:bg-gray-800">📂 Histórico Completo</button>
+      </nav>
+      <div class="mt-auto p-3 text-xs text-gray-400">© Portal • Flask</div>
+    </aside>
+
+    <!-- Main -->
+    <main class="flex-1 h-full">
+      <iframe id="pageFrame" title="page" loading="lazy"></iframe>
+    </main>
+  </div>
+</body>
+</html>

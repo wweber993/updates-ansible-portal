@@ -1,0 +1,78 @@
+[
+  {
+    "server_name": "srv-001",
+    "ip_address": "192.168.30.221",
+    "update_status": "SUCCESS",
+    "installed_kbs": [
+      "KB501845"
+    ],
+    "error_details": "Timeout installing updates",
+    "report_timestamp": "2025-09-10T11:55:01Z",
+    "server_received_at": "2025-09-10T11:55:01-03:00",
+    "ambiente": "DEV",
+    "so": "Windows"
+  },
+  {
+    "server_name": "srv-001",
+    "ip_address": "192.168.15.153",
+    "update_status": "FAILED",
+    "installed_kbs": [],
+    "error_details": "Timeout installing updates",
+    "report_timestamp": "2025-09-15T17:55:01Z",
+    "server_received_at": "2025-09-15T17:55:01-03:00",
+    "ambiente": "PRODUCAO",
+    "so": "Linux"
+  },
+  {
+    "server_name": "srv-001",
+    "ip_address": "192.168.25.192",
+    "update_status": "FAILED",
+    "installed_kbs": [
+      "KB502196"
+    ],
+    "error_details": "Timeout installing updates",
+    "report_timestamp": "2025-09-12T14:55:01Z",
+    "server_received_at": "2025-09-12T14:55:01-03:00",
+    "ambiente": "PRODUCAO",
+    "so": "Windows"
+  },
+  {
+    "server_name": "srv-001",
+    "ip_address": "192.168.6.118",
+    "update_status": "SUCCESS",
+    "installed_kbs": [
+      "KB502128"
+    ],
+    "error_details": "Timeout installing updates",
+    "report_timestamp": "2025-09-18T10:55:01Z",
+    "server_received_at": "2025-09-18T10:55:01-03:00",
+    "ambiente": "DEV",
+    "so": "Windows"
+  },
+  {
+    "server_name": "srv-001",
+    "ip_address": "192.168.42.247",
+    "update_status": "SUCCESS",
+    "installed_kbs": [
+      "KB501094"
+    ],
+    "error_details": "Timeout installing updates",
+    "report_timestamp": "2025-09-09T16:55:01Z",
+    "server_received_at": "2025-09-09T16:55:01-03:00",
+    "ambiente": "PRODUCAO",
+    "so": "Windows"
+  },
+  {
+    "server_name": "srv-001",
+    "ip_address": "192.168.49.132",
+    "update_status": "FAILED",
+    "installed_kbs": [
+      "KB503601"
+    ],
+    "error_details": "Timeout installing updates",
+    "report_timestamp": "2025-09-09T07:55:01Z",
+    "server_received_at": "2025-09-09T07:55:01-03:00",
+    "ambiente": "DEV",
+    "so": "Windows"
+  }
+]

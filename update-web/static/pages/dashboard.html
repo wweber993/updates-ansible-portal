@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+  <script src="/static/js/app.js"></script>
+</head>
+<body class="p-4">
+  <h1 class="text-2xl font-semibold mb-4">📊 Dashboard</h1>
+
+  <!-- KPIs -->
+  <div class="grid grid-cols-2 md:grid-cols-6 gap-3 mb-6">
+    <div class="bg-white rounded shadow p-3"><div class="text-xs text-gray-500">Total Updates</div><div id="kpi_total" class="text-xl font-bold">-</div></div>
+    <div class="bg-white rounded shadow p-3"><div class="text-xs text-gray-500">Sucessos</div><div id="kpi_ok" class="text-xl font-bold">-</div></div>
+    <div class="bg-white rounded shadow p-3"><div class="text-xs text-gray-500">Falhas</div><div id="kpi_fail" class="text-xl font-bold">-</div></div>
+    <div class="bg-white rounded shadow p-3"><div class="text-xs text-gray-500">Sem Updates</div><div id="kpi_none" class="text-xl font-bold">-</div></div>
+    <div class="bg-white rounded shadow p-3"><div class="text-xs text-gray-500">Windows 🪟</div><div id="kpi_win" class="text-xl font-bold">-</div></div>
+    <div class="bg-white rounded shadow p-3"><div class="text-xs text-gray-500">Linux 🐧</div><div id="kpi_lin" class="text-xl font-bold">-</div></div>
+  </div>
+
+  <!-- Gráficos em 2x2 -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div class="bg-white rounded shadow p-3 h-64">
+      <canvas id="chart_status"></canvas>
+    </div>
+    <div class="bg-white rounded shadow p-3 h-64">
+      <canvas id="chart_amb"></canvas>
+    </div>
+    <div class="bg-white rounded shadow p-3 h-64">
+      <canvas id="chart_fail_amb"></canvas>
+    </div>
+    <div class="bg-white rounded shadow p-3 h-64">
+      <canvas id="chart_fail_so"></canvas>
+    </div>
+  </div>
+
+  <script>
+    (async () => {
+      const { items } = await fetchAllData();
+
+      const total = items.length;
+      const ok = items.filter(x => x.update_status === "SUCCESS").length;
+      const fail = items.filter(x => x.update_status === "FAILED").length;
+      const none = items.filter(x => x.update_status === "NO_UPDATES_FOUND").length;
+      const win = items.filter(x => (x.so || "").toLowerCase() === "windows").length;
+      const lin = items.filter(x => (x.so || "").toLowerCase() === "linux").length;
+
+      setKpi("kpi_total", total);
+      setKpi("kpi_ok", ok);
+      setKpi("kpi_fail", fail);
+      setKpi("kpi_none", none);
+      setKpi("kpi_win", win);
+      setKpi("kpi_lin", lin);
+
+      // 1) Status (cores semânticas por status)
+      makePie(
+        "chart_status",
+        ["SUCCESS","FAILED","NO_UPDATES_FOUND"],
+        [ok, fail, none],
+        "Distribuição por Status",
+        { colorMode: "status" }
+      );
+
+      // 2) Distribuição por Ambiente (paleta estável por nome)
+      const byAmb = Array.from(countBy(items, x => x.ambiente || "—"));
+      makeBar(
+        "chart_amb",
+        byAmb.map(([k]) => k),
+        byAmb.map(([_,v]) => v),
+        "Distribuição por Ambiente",
+        { colorMode: "palette" }
+      );
+
+      // 3) Falhas por Ambiente (vermelho)
+      const fails = items.filter(x => x.update_status === "FAILED");
+      const failByAmb = Array.from(countBy(fails, x => x.ambiente || "—"));
+      makeBar(
+        "chart_fail_amb",
+        failByAmb.map(([k]) => k),
+        failByAmb.map(([_,v]) => v),
+        "Falhas por Ambiente",
+        { colorMode: "single", singleColor: "#ef4444" }
+      );
+
+      // 4) Falhas por SO (monocromático vermelho)
+      const failBySO = Array.from(countBy(fails, x => (x.so || "—")));
+      makePie(
+        "chart_fail_so",
+        failBySO.map(([k]) => k),
+        failBySO.map(([_,v]) => v),
+        "Falhas por SO",
+        { colorMode: "monochrome", baseColor: "#ef4444" }
+      );
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,85 @@
+[
+  {
+    "server_name": "srv-004",
+    "ip_address": "192.168.24.129",
+    "update_status": "NO_UPDATES_FOUND",
+    "installed_kbs": [],
+    "error_details": "Timeout installing updates",
+    "report_timestamp": "2025-09-10T20:55:01Z",
+    "server_received_at": "2025-09-10T20:55:01-03:00",
+    "ambiente": "DEV",
+    "so": "Linux"
+  },
+  {
+    "server_name": "srv-004",
+    "ip_address": "192.168.46.105",
+    "update_status": "SUCCESS",
+    "installed_kbs": [
+      "KB502454"
+    ],
+    "error_details": "Timeout installing updates",
+    "report_timestamp": "2025-09-14T10:55:01Z",
+    "server_received_at": "2025-09-14T10:55:01-03:00",
+    "ambiente": "PRODUCAO",
+    "so": "Linux"
+  },
+  {
+    "server_name": "srv-004",
+    "ip_address": "192.168.14.119",
+    "update_status": "SUCCESS",
+    "installed_kbs": [
+      "KB501209"
+    ],
+    "error_details": null,
+    "report_timestamp": "2025-09-11T20:55:01Z",
+    "server_received_at": "2025-09-11T20:55:01-03:00",
+    "ambiente": "LAB",
+    "so": "Linux"
+  },
+  {
+    "server_name": "srv-004",
+    "ip_address": "192.168.35.27",
+    "update_status": "NO_UPDATES_FOUND",
+    "installed_kbs": [],
+    "error_details": "Timeout installing updates",
+    "report_timestamp": "2025-09-08T22:55:01Z",
+    "server_received_at": "2025-09-08T22:55:01-03:00",
+    "ambiente": "PRODUCAO",
+    "so": "Windows"
+  },
+  {
+    "server_name": "srv-004",
+    "ip_address": "192.168.3.12",
+    "update_status": "FAILED",
+    "installed_kbs": [],
+    "error_details": "Timeout installing updates",
+    "report_timestamp": "2025-09-10T08:55:01Z",
+    "server_received_at": "2025-09-10T08:55:01-03:00",
+    "ambiente": "DEV",
+    "so": "Windows"
+  },
+  {
+    "server_name": "srv-004",
+    "ip_address": "192.168.27.211",
+    "update_status": "FAILED",
+    "installed_kbs": [],
+    "error_details": null,
+    "report_timestamp": "2025-09-10T17:55:01Z",
+    "server_received_at": "2025-09-10T17:55:01-03:00",
+    "ambiente": "PRODUCAO",
+    "so": "Linux"
+  },
+  {
+    "server_name": "srv-004",
+    "ip_address": "192.168.19.173",
+    "update_status": "FAILED",
+    "installed_kbs": [
+      "KB501726"
+    ],
+    "error_details": "Timeout installing updates",
+    "report_timestamp": "2025-09-12T16:55:01Z",
+    "server_received_at": "2025-09-12T16:55:01-03:00",
+    "ambiente": "HOMOLOG",
+    "so": "Linux"
+  }
+]

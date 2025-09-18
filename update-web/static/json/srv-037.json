@@ -1,0 +1,89 @@
+[
+  {
+    "server_name": "srv-037",
+    "ip_address": "192.168.2.12",
+    "update_status": "FAILED",
+    "installed_kbs": [],
+    "error_details": "Timeout installing updates",
+    "report_timestamp": "2025-09-13T04:55:01Z",
+    "server_received_at": "2025-09-13T04:55:01-03:00",
+    "ambiente": "HOMOLOG",
+    "so": "Linux"
+  },
+  {
+    "server_name": "srv-037",
+    "ip_address": "192.168.35.248",
+    "update_status": "SUCCESS",
+    "installed_kbs": [
+      "KB502975"
+    ],
+    "error_details": "Timeout installing updates",
+    "report_timestamp": "2025-09-14T09:55:01Z",
+    "server_received_at": "2025-09-14T09:55:01-03:00",
+    "ambiente": "LAB",
+    "so": "Linux"
+  },
+  {
+    "server_name": "srv-037",
+    "ip_address": "192.168.34.233",
+    "update_status": "SUCCESS",
+    "installed_kbs": [
+      "KB503644"
+    ],
+    "error_details": null,
+    "report_timestamp": "2025-09-13T05:55:01Z",
+    "server_received_at": "2025-09-13T05:55:01-03:00",
+    "ambiente": "LAB",
+    "so": "Linux"
+  },
+  {
+    "server_name": "srv-037",
+    "ip_address": "192.168.29.51",
+    "update_status": "NO_UPDATES_FOUND",
+    "installed_kbs": [],
+    "error_details": "Timeout installing updates",
+    "report_timestamp": "2025-09-11T07:55:01Z",
+    "server_received_at": "2025-09-11T07:55:01-03:00",
+    "ambiente": "DEV",
+    "so": "Windows"
+  },
+  {
+    "server_name": "srv-037",
+    "ip_address": "192.168.40.223",
+    "update_status": "FAILED",
+    "installed_kbs": [
+      "KB502976"
+    ],
+    "error_details": "Timeout installing updates",
+    "report_timestamp": "2025-09-09T22:55:01Z",
+    "server_received_at": "2025-09-09T22:55:01-03:00",
+    "ambiente": "PRODUCAO",
+    "so": "Windows"
+  },
+  {
+    "server_name": "srv-037",
+    "ip_address": "192.168.14.98",
+    "update_status": "SUCCESS",
+    "installed_kbs": [
+      "KB503339"
+    ],
+    "error_details": null,
+    "report_timestamp": "2025-09-15T11:55:01Z",
+    "server_received_at": "2025-09-15T11:55:01-03:00",
+    "ambiente": "LAB",
+    "so": "Windows"
+  },
+  {
+    "server_name": "srv-037",
+    "ip_address": "192.168.10.99",
+    "update_status": "SUCCESS",
+    "installed_kbs": [
+      "KB503295"
+    ],
+    "error_details": null,
+    "report_timestamp": "2025-09-13T08:55:01Z",
+    "server_received_at": "2025-09-13T08:55:01-03:00",
+    "ambiente": "PRODUCAO",
+    "so": "Linux"
+  }
+]

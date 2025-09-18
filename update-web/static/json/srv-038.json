@@ -1,0 +1,39 @@
+[
+  {
+    "server_name": "srv-038",
+    "ip_address": "192.168.19.239",
+    "update_status": "SUCCESS",
+    "installed_kbs": [
+      "KB503786"
+    ],
+    "error_details": "Timeout installing updates",
+    "report_timestamp": "2025-09-15T22:55:01Z",
+    "server_received_at": "2025-09-15T22:55:01-03:00",
+    "ambiente": "LAB",
+    "so": "Windows"
+  },
+  {
+    "server_name": "srv-038",
+    "ip_address": "192.168.32.170",
+    "update_status": "SUCCESS",
+    "installed_kbs": [],
+    "error_details": "Timeout installing updates",
+    "report_timestamp": "2025-09-14T12:55:01Z",
+    "server_received_at": "2025-09-14T12:55:01-03:00",
+    "ambiente": "HOMOLOG",
+    "so": "Linux"
+  },
+  {
+    "server_name": "srv-038",
+    "ip_address": "192.168.36.24",
+    "update_status": "FAILED",
+    "installed_kbs": [
+      "KB500328"
+    ],
+    "error_details": "Timeout installing updates",
+    "report_timestamp": "2025-09-15T00:55:01Z",
+    "server_received_at": "2025-09-15T00:55:01-03:00",
+    "ambiente": "HOMOLOG",
+    "so": "Windows"
+  }
+]

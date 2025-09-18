@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Checar Janela</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="/static/js/app.js"></script>
+</head>
+<body class="p-4">
+  <h1 class="text-2xl font-semibold mb-4">🔍 Checar Janela de Atualizações</h1>
+
+  <div class="bg-white rounded shadow p-4 mb-4 grid md:grid-cols-3 gap-3">
+    <label class="block">Mês (AAAA-MM) <input id="mes" type="month" class="w-full border p-2 rounded"></label>
+    <div class="md:col-span-2">
+      <label class="block">Servidores (um por linha)</label>
+      <textarea id="lista" rows="6" class="w-full border p-2 rounded" placeholder="ex.: srv01&#10;srv02&#10;srv03"></textarea>
+    </div>
+  </div>
+
+  <div class="bg-white rounded shadow p-3 mb-3 grid grid-cols-4 gap-3 text-center">
+    <div><div class="text-xs text-gray-500">Total informados</div><div id="k_total" class="text-xl font-bold">-</div></div>
+    <div><div class="text-xs text-gray-500">Com update</div><div id="k_ok" class="text-xl font-bold">-</div></div>
+    <div><div class="text-xs text-gray-500">Sem update</div><div id="k_none" class="text-xl font-bold">-</div></div>
+    <div><div class="text-xs text-gray-500">Não encontrados</div><div id="k_nf" class="text-xl font-bold">-</div></div>
+  </div>
+
+  <div class="overflow-auto bg-white rounded shadow">
+    <table class="min-w-full text-sm">
+      <thead class="bg-gray-50">
+        <tr>
+          <th class="text-left p-2">Servidor</th>
+          <th class="text-left p-2">Status</th>
+          <th class="text-left p-2">Detalhe</th>
+        </tr>
+      </thead>
+      <tbody id="tbody"></tbody>
+    </table>
+  </div>
+
+  <script>
+    (async () => {
+      const { items } = await fetchAllData();
+      const mes = document.getElementById('mes');
+      const lista = document.getElementById('lista');
+      const tbody = document.getElementById('tbody');
+
+      function inMonth(ts, ym) {
+        if (!ts || !ym) return false;
+        const d = new Date(ts);
+        if (isNaN(d)) return false;
+        const [y, m] = ym.split("-");
+        return d.getUTCFullYear() === +y && (d.getUTCMonth()+1) === +m;
+      }
+
+      function render() {
+        const servers = (lista.value || "").split(/\r?\n/).map(s => s.trim()).filter(Boolean);
+        const ym = mes.value;
+        let kTotal = servers.length, kOk = 0, kNone = 0, kNF = 0;
+
+        const byName = new Map();
+        items.forEach(x => { if (x.server_name) byName.set(x.server_name.toLowerCase(), (byName.get(x.server_name.toLowerCase())||[]).concat([x])); });
+
+        tbody.innerHTML = servers.map(name => {
+          const recs = byName.get(name.toLowerCase());
+          if (!recs) { kNF++; return `<tr class="border-t"><td class="p-2">${name}</td><td class="p-2">❌ Não encontrado</td><td class="p-2">—</td></tr>`; }
+          const monthRecs = recs.filter(r => inMonth(r.report_timestamp, ym));
+          if (monthRecs.length) {
+            kOk++;
+            const any = monthRecs[0];
+            const hasWin = (any.so||"").toLowerCase()==="windows";
+            const hasList = hasWin ? (any.installed_kbs && any.installed_kbs.length) : (any.installed_packages && any.installed_packages.length);
+            const det = hasList ? (hasWin ? any.installed_kbs.join(", ") : any.installed_packages.join(", ")) : "—";
+            const badge = "✅ Update no mês";
+            return `<tr class="border-t"><td class="p-2">${name}</td><td class="p-2">${badge}</td><td class="p-2">${det}</td></tr>`;
+          } else {
+            kNone++;
+            return `<tr class="border-t"><td class="p-2">${name}</td><td class="p-2">⚠️ Sem update no mês</td><td class="p-2">—</td></tr>`;
+          }
+        }).join("");
+
+        setKpi("k_total", kTotal);
+        setKpi("k_ok", kOk);
+        setKpi("k_none", kNone);
+        setKpi("k_nf", kNF);
+      }
+
+      [mes, lista].forEach(el => el.addEventListener('input', render));
+      render();
+    })();
+  </script>
+</body>
+</html>

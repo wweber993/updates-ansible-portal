@@ -1,0 +1,100 @@
+[
+  {
+    "server_name": "srv-020",
+    "ip_address": "192.168.20.121",
+    "update_status": "SUCCESS",
+    "installed_kbs": [],
+    "error_details": null,
+    "report_timestamp": "2025-09-08T23:55:01Z",
+    "server_received_at": "2025-09-08T23:55:01-03:00",
+    "ambiente": "LAB",
+    "so": "Linux"
+  },
+  {
+    "server_name": "srv-020",
+    "ip_address": "192.168.10.55",
+    "update_status": "FAILED",
+    "installed_kbs": [],
+    "error_details": null,
+    "report_timestamp": "2025-09-08T22:55:01Z",
+    "server_received_at": "2025-09-08T22:55:01-03:00",
+    "ambiente": "DEV",
+    "so": "Windows"
+  },
+  {
+    "server_name": "srv-020",
+    "ip_address": "192.168.21.37",
+    "update_status": "SUCCESS",
+    "installed_kbs": [
+      "KB501044"
+    ],
+    "error_details": "Timeout installing updates",
+    "report_timestamp": "2025-09-13T17:55:01Z",
+    "server_received_at": "2025-09-13T17:55:01-03:00",
+    "ambiente": "PRODUCAO",
+    "so": "Windows"
+  },
+  {
+    "server_name": "srv-020",
+    "ip_address": "192.168.45.189",
+    "update_status": "NO_UPDATES_FOUND",
+    "installed_kbs": [
+      "KB500277"
+    ],
+    "error_details": "Timeout installing updates",
+    "report_timestamp": "2025-09-13T07:55:01Z",
+    "server_received_at": "2025-09-13T07:55:01-03:00",
+    "ambiente": "LAB",
+    "so": "Windows"
+  },
+  {
+    "server_name": "srv-020",
+    "ip_address": "192.168.46.206",
+    "update_status": "NO_UPDATES_FOUND",
+    "installed_kbs": [
+      "KB500124"
+    ],
+    "error_details": "Timeout installing updates",
+    "report_timestamp": "2025-09-09T00:55:01Z",
+    "server_received_at": "2025-09-09T00:55:01-03:00",
+    "ambiente": "DEV",
+    "so": "Linux"
+  },
+  {
+    "server_name": "srv-020",
+    "ip_address": "192.168.41.104",
+    "update_status": "SUCCESS",
+    "installed_kbs": [
+      "KB502581"
+    ],
+    "error_details": "Timeout installing updates",
+    "report_timestamp": "2025-09-12T02:55:01Z",
+    "server_received_at": "2025-09-12T02:55:01-03:00",
+    "ambiente": "DEV",
+    "so": "Linux"
+  },
+  {
+    "server_name": "srv-020",
+    "ip_address": "192.168.40.227",
+    "update_status": "SUCCESS",
+    "installed_kbs": [
+      "KB502341"
+    ],
+    "error_details": null,
+    "report_timestamp": "2025-09-17T01:55:01Z",
+    "server_received_at": "2025-09-17T01:55:01-03:00",
+    "ambiente": "LAB",
+    "so": "Linux"
+  },
+  {
+    "server_name": "srv-020",
+    "ip_address": "192.168.50.51",
+    "update_status": "NO_UPDATES_FOUND",
+    "installed_kbs": [],
+    "error_details": "Timeout installing updates",
+    "report_timestamp": "2025-09-15T22:55:01Z",
+    "server_received_at": "2025-09-15T22:55:01-03:00",
+    "ambiente": "PRODUCAO",
+    "so": "Linux"
+  }
+]

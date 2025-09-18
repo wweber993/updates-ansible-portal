@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Histórico Completo</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="/static/js/app.js"></script>
+</head>
+<body class="p-4">
+  <h1 class="text-2xl font-semibold mb-4">📂 Histórico Completo</h1>
+
+  <div class="bg-white rounded shadow p-3 mb-3">
+    <input id="q" class="w-full border p-2 rounded" placeholder="Busca global..." />
+  </div>
+
+  <div class="overflow-auto bg-white rounded shadow mb-3">
+    <table class="min-w-full text-sm">
+      <thead class="bg-gray-50">
+        <tr>
+          <th class="text-left p-2">Servidor</th>
+          <th class="text-left p-2">Ambiente</th>
+          <th class="text-left p-2">SO</th>
+          <th class="text-left p-2">Status</th>
+          <th class="text-left p-2">Data</th>
+        </tr>
+      </thead>
+      <tbody id="tbody"></tbody>
+    </table>
+  </div>
+
+  <div class="flex items-center gap-2">
+    <button id="prev" class="px-3 py-1 bg-gray-200 rounded">Anterior</button>
+    <span id="pageinfo" class="text-sm text-gray-600"></span>
+    <button id="next" class="px-3 py-1 bg-gray-200 rounded">Próximo</button>
+  </div>
+
+  <script>
+    (async () => {
+      const { items } = await fetchAllData();
+      const q = document.getElementById('q');
+      const tbody = document.getElementById('tbody');
+      const prev = document.getElementById('prev');
+      const next = document.getElementById('next');
+      const pageinfo = document.getElementById('pageinfo');
+      let page = 1, perPage = 50;
+
+      function row(x){
+        const soIcon = (x.so || "").toLowerCase() === "windows" ? "🪟" : ((x.so || "").toLowerCase() === "linux" ? "🐧" : "—");
+        return `<tr class="border-t">
+          <td class="p-2">${x.server_name || "—"}</td>
+          <td class="p-2">${x.ambiente || "—"}</td>
+          <td class="p-2">${soIcon} ${x.so || "—"}</td>
+          <td class="p-2">${x.update_status || "—"}</td>
+          <td class="p-2">${brDate(x.report_timestamp)}</td>
+        </tr>`;
+      }
+
+      function render(){
+        let filtered = filterByQuery(items, q.value, ["server_name","ambiente","so","update_status"]);
+        const { slice, page: p, pages, total } = paginate(filtered, page, perPage);
+        page = p;
+        tbody.innerHTML = slice.map(row).join("");
+        pageinfo.textContent = `Página ${p} de ${pages} • ${total} registros`;
+        prev.disabled = (p <= 1);
+        next.disabled = (p >= pages);
+      }
+
+      q.addEventListener('input', () => { page = 1; render(); });
+      prev.addEventListener('click', () => { page--; render(); });
+      next.addEventListener('click', () => { page++; render(); });
+
+      render();
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+[
+  {
+    "server_name": "srv-007",
+    "ip_address": "192.168.1.127",
+    "update_status": "FAILED",
+    "installed_kbs": [],
+    "error_details": null,
+    "report_timestamp": "2025-09-08T22:55:01Z",
+    "server_received_at": "2025-09-08T22:55:01-03:00",
+    "ambiente": "PRODUCAO",
+    "so": "Windows"
+  },
+  {
+    "server_name": "srv-007",
+    "ip_address": "192.168.11.51",
+    "update_status": "FAILED",
+    "installed_kbs": [],
+    "error_details": "Timeout installing updates",
+    "report_timestamp": "2025-09-11T00:55:01Z",
+    "server_received_at": "2025-09-11T00:55:01-03:00",
+    "ambiente": "PRODUCAO",
+    "so": "Windows"
+  },
+  {
+    "server_name": "srv-007",
+    "ip_address": "192.168.7.110",
+    "update_status": "FAILED",
+    "installed_kbs": [],
+    "error_details": "Timeout installing updates",
+    "report_timestamp": "2025-09-13T22:55:01Z",
+    "server_received_at": "2025-09-13T22:55:01-03:00",
+    "ambiente": "HOMOLOG",
+    "so": "Windows"
+  }
+]

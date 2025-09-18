@@ -1,0 +1,41 @@
+[
+  {
+    "server_name": "srv-010",
+    "ip_address": "192.168.9.98",
+    "update_status": "FAILED",
+    "installed_kbs": [
+      "KB501175"
+    ],
+    "error_details": null,
+    "report_timestamp": "2025-09-10T19:55:01Z",
+    "server_received_at": "2025-09-10T19:55:01-03:00",
+    "ambiente": "PRODUCAO",
+    "so": "Windows"
+  },
+  {
+    "server_name": "srv-010",
+    "ip_address": "192.168.27.145",
+    "update_status": "FAILED",
+    "installed_kbs": [
+      "KB502540"
+    ],
+    "error_details": null,
+    "report_timestamp": "2025-09-10T03:55:01Z",
+    "server_received_at": "2025-09-10T03:55:01-03:00",
+    "ambiente": "DEV",
+    "so": "Windows"
+  },
+  {
+    "server_name": "srv-010",
+    "ip_address": "192.168.1.105",
+    "update_status": "FAILED",
+    "installed_kbs": [
+      "KB500656"
+    ],
+    "error_details": "Timeout installing updates",
+    "report_timestamp": "2025-09-12T11:55:01Z",
+    "server_received_at": "2025-09-12T11:55:01-03:00",
+    "ambiente": "HOMOLOG",
+    "so": "Windows"
+  }
+]

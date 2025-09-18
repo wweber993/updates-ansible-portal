@@ -1,0 +1,76 @@
+[
+  {
+    "server_name": "srv-031",
+    "ip_address": "192.168.2.166",
+    "update_status": "SUCCESS",
+    "installed_kbs": [
+      "KB503397"
+    ],
+    "error_details": null,
+    "report_timestamp": "2025-09-14T16:55:01Z",
+    "server_received_at": "2025-09-14T16:55:01-03:00",
+    "ambiente": "DEV",
+    "so": "Linux"
+  },
+  {
+    "server_name": "srv-031",
+    "ip_address": "192.168.31.112",
+    "update_status": "SUCCESS",
+    "installed_kbs": [],
+    "error_details": "Timeout installing updates",
+    "report_timestamp": "2025-09-13T09:55:01Z",
+    "server_received_at": "2025-09-13T09:55:01-03:00",
+    "ambiente": "PRODUCAO",
+    "so": "Windows"
+  },
+  {
+    "server_name": "srv-031",
+    "ip_address": "192.168.1.56",
+    "update_status": "NO_UPDATES_FOUND",
+    "installed_kbs": [
+      "KB500168"
+    ],
+    "error_details": "Timeout installing updates",
+    "report_timestamp": "2025-09-17T09:55:01Z",
+    "server_received_at": "2025-09-17T09:55:01-03:00",
+    "ambiente": "HOMOLOG",
+    "so": "Linux"
+  },
+  {
+    "server_name": "srv-031",
+    "ip_address": "192.168.11.230",
+    "update_status": "NO_UPDATES_FOUND",
+    "installed_kbs": [
+      "KB501772"
+    ],
+    "error_details": "Timeout installing updates",
+    "report_timestamp": "2025-09-16T00:55:01Z",
+    "server_received_at": "2025-09-16T00:55:01-03:00",
+    "ambiente": "LAB",
+    "so": "Linux"
+  },
+  {
+    "server_name": "srv-031",
+    "ip_address": "192.168.32.89",
+    "update_status": "FAILED",
+    "installed_kbs": [],
+    "error_details": "Timeout installing updates",
+    "report_timestamp": "2025-09-16T08:55:01Z",
+    "server_received_at": "2025-09-16T08:55:01-03:00",
+    "ambiente": "LAB",
+    "so": "Linux"
+  },
+  {
+    "server_name": "srv-031",
+    "ip_address": "192.168.42.150",
+    "update_status": "SUCCESS",
+    "installed_kbs": [
+      "KB502241"
+    ],
+    "error_details": "Timeout installing updates",
+    "report_timestamp": "2025-09-15T15:55:01Z",
+    "server_received_at": "2025-09-15T15:55:01-03:00",
+    "ambiente": "DEV",
+    "so": "Linux"
+  }
+]

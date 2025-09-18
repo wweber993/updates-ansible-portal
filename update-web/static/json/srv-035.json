@@ -1,0 +1,87 @@
+[
+  {
+    "server_name": "srv-035",
+    "ip_address": "192.168.2.93",
+    "update_status": "SUCCESS",
+    "installed_kbs": [
+      "KB501981"
+    ],
+    "error_details": null,
+    "report_timestamp": "2025-09-12T12:55:01Z",
+    "server_received_at": "2025-09-12T12:55:01-03:00",
+    "ambiente": "PRODUCAO",
+    "so": "Windows"
+  },
+  {
+    "server_name": "srv-035",
+    "ip_address": "192.168.17.58",
+    "update_status": "NO_UPDATES_FOUND",
+    "installed_kbs": [],
+    "error_details": null,
+    "report_timestamp": "2025-09-08T16:55:01Z",
+    "server_received_at": "2025-09-08T16:55:01-03:00",
+    "ambiente": "LAB",
+    "so": "Windows"
+  },
+  {
+    "server_name": "srv-035",
+    "ip_address": "192.168.2.13",
+    "update_status": "SUCCESS",
+    "installed_kbs": [
+      "KB503548"
+    ],
+    "error_details": "Timeout installing updates",
+    "report_timestamp": "2025-09-11T08:55:01Z",
+    "server_received_at": "2025-09-11T08:55:01-03:00",
+    "ambiente": "DEV",
+    "so": "Linux"
+  },
+  {
+    "server_name": "srv-035",
+    "ip_address": "192.168.19.78",
+    "update_status": "SUCCESS",
+    "installed_kbs": [
+      "KB500446"
+    ],
+    "error_details": null,
+    "report_timestamp": "2025-09-09T04:55:01Z",
+    "server_received_at": "2025-09-09T04:55:01-03:00",
+    "ambiente": "HOMOLOG",
+    "so": "Linux"
+  },
+  {
+    "server_name": "srv-035",
+    "ip_address": "192.168.26.196",
+    "update_status": "NO_UPDATES_FOUND",
+    "installed_kbs": [
+      "KB500774"
+    ],
+    "error_details": null,
+    "report_timestamp": "2025-09-14T09:55:01Z",
+    "server_received_at": "2025-09-14T09:55:01-03:00",
+    "ambiente": "DEV",
+    "so": "Linux"
+  },
+  {
+    "server_name": "srv-035",
+    "ip_address": "192.168.4.232",
+    "update_status": "FAILED",
+    "installed_kbs": [],
+    "error_details": "Timeout installing updates",
+    "report_timestamp": "2025-09-09T04:55:01Z",
+    "server_received_at": "2025-09-09T04:55:01-03:00",
+    "ambiente": "DEV",
+    "so": "Linux"
+  },
+  {
+    "server_name": "srv-035",
+    "ip_address": "192.168.49.162",
+    "update_status": "FAILED",
+    "installed_kbs": [],
+    "error_details": "Timeout installing updates",
+    "report_timestamp": "2025-09-10T01:55:01Z",
+    "server_received_at": "2025-09-10T01:55:01-03:00",
+    "ambiente": "DEV",
+    "so": "Linux"
+  }
+]

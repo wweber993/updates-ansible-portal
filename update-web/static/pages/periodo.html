@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Por Período</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="/static/js/app.js"></script>
+</head>
+<body class="p-4">
+  <h1 class="text-2xl font-semibold mb-4">📆 Por Período</h1>
+
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-4">
+    <input id="inicio" type="date" class="border p-2 rounded" />
+    <input id="fim" type="date" class="border p-2 rounded" />
+    <input id="q" class="border p-2 rounded" placeholder="Buscar (servidor/ambiente)" />
+  </div>
+
+  <div class="overflow-auto bg-white rounded shadow">
+    <table class="min-w-full text-sm">
+      <thead class="bg-gray-50">
+        <tr>
+          <th class="text-left p-2">Servidor</th>
+          <th class="text-left p-2">Ambiente</th>
+          <th class="text-left p-2">SO</th>
+          <th class="text-left p-2">Status</th>
+          <th class="text-left p-2">Data</th>
+        </tr>
+      </thead>
+      <tbody id="tbody"></tbody>
+    </table>
+  </div>
+
+  <script>
+    (async () => {
+      const { items } = await fetchAllData();
+      const inicio = document.getElementById('inicio');
+      const fim = document.getElementById('fim');
+      const q = document.getElementById('q');
+      const tbody = document.getElementById('tbody');
+
+      // datas default últimos 7 dias
+      const today = new Date();
+      const start = new Date(today); start.setDate(start.getDate()-7);
+      inicio.valueAsDate = start;
+      fim.valueAsDate = today;
+
+      function row(x){
+        const soIcon = (x.so || "").toLowerCase() === "windows" ? "🪟" :
+                       (x.so || "").toLowerCase() === "linux" ? "🐧" : "—";
+        return `<tr class="border-t">
+          <td class="p-2">${x.server_name || "—"}</td>
+          <td class="p-2">${x.ambiente || "—"}</td>
+          <td class="p-2">${soIcon} ${x.so || "—"}</td>
+          <td class="p-2">${x.update_status || "—"}</td>
+          <td class="p-2">${brDate(x.report_timestamp)}</td>
+        </tr>`;
+      }
+
+      function render(){
+        const ini = inicio.valueAsDate ? inicio.valueAsDate.getTime() : null;
+        const end = fim.valueAsDate ? fim.valueAsDate.getTime() : null;
+        let filtered = items;
+
+        if (ini && end) {
+          filtered = filtered.filter(x => {
+            const d = new Date(x.report_timestamp).getTime();
+            return d >= ini && d <= end;
+          });
+        }
+        filtered = filterByQuery(filtered, q.value, ["server_name","ambiente"]);
+        tbody.innerHTML = filtered.map(row).join("");
+      }
+
+      inicio.addEventListener('change', render);
+      fim.addEventListener('change', render);
+      q.addEventListener('input', render);
+      render(); // inicial
+    })();
+  </script>
+</body>
+</html>

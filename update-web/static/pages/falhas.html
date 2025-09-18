@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Falhas</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+  <script src="/static/js/app.js"></script>
+</head>
+<body class="p-4">
+  <h1 class="text-2xl font-semibold mb-4">❌ Falhas</h1>
+
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+    <div class="bg-white rounded shadow p-3"><div class="text-xs text-gray-500">Total Falhas</div><div id="kpi_fails" class="text-xl font-bold">-</div></div>
+    <div class="bg-white rounded shadow p-3"><div class="text-xs text-gray-500">Ambientes com falha</div><div id="kpi_ambs" class="text-xl font-bold">-</div></div>
+    <div class="bg-white rounded shadow p-3"><div class="text-xs text-gray-500">Ambiente c/ mais falhas</div><div id="kpi_topamb" class="text-xl font-bold">-</div></div>
+    <div class="bg-white rounded shadow p-3"><div class="text-xs text-gray-500">SO c/ mais falhas</div><div id="kpi_topso" class="text-xl font-bold">-</div></div>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-4">
+    <div class="bg-white rounded shadow p-3 h-64">
+      <canvas id="chart_fail_amb"></canvas>
+    </div>
+    <div class="bg-white rounded shadow p-3 h-64">
+      <canvas id="chart_fail_so"></canvas>
+    </div>
+  </div>
+
+  <div class="bg-white rounded shadow p-3 mb-3">
+    <input id="q" class="w-full border p-2 rounded" placeholder="Buscar por servidor ou ambiente..." />
+  </div>
+
+  <div class="overflow-auto bg-white rounded shadow">
+    <table class="min-w-full text-sm">
+      <thead class="bg-gray-50">
+        <tr>
+          <th class="text-left p-2">Servidor</th>
+          <th class="text-left p-2">Ambiente</th>
+          <th class="text-left p-2">SO</th>
+          <th class="text-left p-2">Data</th>
+          <th class="text-left p-2">Erro</th>
+        </tr>
+      </thead>
+      <tbody id="tbody"></tbody>
+    </table>
+  </div>
+
+  <script>
+    (async () => {
+      const { items } = await fetchAllData();
+      const fails = items.filter(x => x.update_status === "FAILED");
+
+      setKpi("kpi_fails", fails.length);
+
+      const ambs = Array.from(new Set(fails.map(x => x.ambiente || "—")));
+      setKpi("kpi_ambs", ambs.length);
+
+      const failByAmb = Array.from(countBy(fails, x => x.ambiente || "—")).sort((a,b)=>b[1]-a[1]);
+      setKpi("kpi_topamb", failByAmb.length ? `${failByAmb[0][0]} (${failByAmb[0][1]})` : "—");
+      makeBar("chart_fail_amb",
+        failByAmb.map(([k])=>k),
+        failByAmb.map(([_,v])=>v),
+        "Falhas por Ambiente",
+        { colorMode: "single", singleColor: "#ef4444" }
+      );
+
+      const failBySO = Array.from(countBy(fails, x => (x.so || "—"))).sort((a,b)=>b[1]-a[1]);
+      setKpi("kpi_topso", failBySO.length ? `${failBySO[0][0]} (${failBySO[0][1]})` : "—");
+      makePie("chart_fail_so",
+        failBySO.map(([k])=>k),
+        failBySO.map(([_,v])=>v),
+        "Falhas por SO",
+        { colorMode: "monochrome", baseColor: "#ef4444" }
+      );
+
+      const q = document.getElementById('q');
+      const tbody = document.getElementById('tbody');
+      function row(x){
+        const soIcon = (x.so || "").toLowerCase() === "windows" ? "🪟" :
+                       (x.so || "").toLowerCase() === "linux" ? "🐧" : "—";
+        return `<tr class="border-t">
+          <td class="p-2">${x.server_name || "—"}</td>
+          <td class="p-2">${x.ambiente || "—"}</td>
+          <td class="p-2">${soIcon} ${x.so || "—"}</td>
+          <td class="p-2">${brDate(x.report_timestamp)}</td>
+          <td class="p-2 text-red-600">${x.error_details || "—"}</td>
+        </tr>`;
+      }
+
+      function render(){
+        const filtered = filterByQuery(fails, q.value, ["server_name","ambiente"]);
+        tbody.innerHTML = filtered.map(row).join("");
+      }
+      q.addEventListener('input', render);
+      render(); // inicial
+    })();
+  </script>
+</body>
+</html>

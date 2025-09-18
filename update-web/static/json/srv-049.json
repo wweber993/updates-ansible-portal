@@ -1,0 +1,39 @@
+[
+  {
+    "server_name": "srv-049",
+    "ip_address": "192.168.42.247",
+    "update_status": "NO_UPDATES_FOUND",
+    "installed_kbs": [],
+    "error_details": "Timeout installing updates",
+    "report_timestamp": "2025-09-17T03:55:01Z",
+    "server_received_at": "2025-09-17T03:55:01-03:00",
+    "ambiente": "LAB",
+    "so": "Linux"
+  },
+  {
+    "server_name": "srv-049",
+    "ip_address": "192.168.37.60",
+    "update_status": "SUCCESS",
+    "installed_kbs": [
+      "KB502372"
+    ],
+    "error_details": null,
+    "report_timestamp": "2025-09-11T23:55:01Z",
+    "server_received_at": "2025-09-11T23:55:01-03:00",
+    "ambiente": "PRODUCAO",
+    "so": "Linux"
+  },
+  {
+    "server_name": "srv-049",
+    "ip_address": "192.168.41.35",
+    "update_status": "SUCCESS",
+    "installed_kbs": [
+      "KB502740"
+    ],
+    "error_details": null,
+    "report_timestamp": "2025-09-11T18:55:01Z",
+    "server_received_at": "2025-09-11T18:55:01-03:00",
+    "ambiente": "DEV",
+    "so": "Windows"
+  }
+]
