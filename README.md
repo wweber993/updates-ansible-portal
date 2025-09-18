@@ -10,6 +10,10 @@ Sistema gratuito e simples para **instalar atualizações** (Windows e Linux) co
 
 ---
 
+## 🛑 ALERTA/AVISO
+![Requer AWX](https://img.shields.io/badge/Requer-AWX%20Tower-red?style=for-the-badge&logo=ansible)
+> 🛑 **Importante:** Este projeto depende do **AWX** para orquestrar a execução dos playbooks de atualização.
+
 ## 🗂 Estrutura do repositório
 
 ```
