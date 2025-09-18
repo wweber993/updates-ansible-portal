@@ -1,4 +1,4 @@
-# Portal de Atualizações para PMEs (Ansible/AWX + Flask)
+# Portal de Atualizações (Ansible/AWX + Flask)
 
 Sistema gratuito e simples para **instalar atualizações** (Windows e Linux) com Ansible/AWX e **acompanhar os resultados** em um **portal web** leve. Sem precisar de softwares pagos: a API recebe os resultados dos playbooks e grava **JSONs** que o portal lê para montar gráficos e relatórios.
 
