@@ -1,0 +1,95 @@
+---
+- name: Atualizar Windows Servers e reportar via API
+  hosts: windows
+  strategy: free
+  serial: 20
+  gather_facts: no
+
+  vars:
+    api_endpoint: "http://ip-ou-dns:8000/api/v1/windows/update"
+    ambiente: "{{ awx_inventory_name }}"
+    sistema: "windows"
+
+  tasks:
+    #################################################################
+    # 1) Instalar atualizações
+    #################################################################
+    - name: Instalar apenas Security e Critical Updates
+      ansible.windows.win_updates:
+        category_names:
+          - SecurityUpdates
+          - CriticalUpdates
+        state: installed
+        server_selection: default
+        reboot: no
+      register: update_result
+      async: 7200
+      ignore_errors: yes
+
+    #################################################################
+    # 2) Normalizar lista de updates
+    #################################################################
+    - name: Normalizar updates em lista simples
+      set_fact:
+        updates_lista: "{{ update_result.updates.values() | list }}"
+      when: update_result.updates is defined
+
+    - name: Lista de updates aplicados com sucesso
+      set_fact:
+        updates_sucesso: "{{ updates_lista | selectattr('installed', 'equalto', true) | list }}"
+      when: updates_lista is defined
+
+    - name: Lista de KBs instalados
+      set_fact:
+        kb_instalados: "{{ updates_sucesso | map(attribute='kb') | list | flatten | unique }}"
+      when: updates_sucesso is defined
+
+    #################################################################
+    # 3) Definir status final
+    #################################################################
+    - name: Determinar status final
+      set_fact:
+        update_status: >-
+          {% if update_result.failed | default(false) %}
+            FAILED
+          {% elif update_result.installed_update_count | default(0) | int > 0 %}
+            SUCCESS
+          {% else %}
+            NO_UPDATES_FOUND
+          {% endif %}
+
+    #################################################################
+    # 4) Montar payload JSON
+    #################################################################
+    - name: Montar payload compatível com API
+      set_fact:
+        update_payload:
+          server_name: "{{ inventory_hostname }}"
+          ip_address: "{{ hostvars[inventory_hostname].ansible_host | default('N/A') }}"
+          update_status: "{{ update_status }}"
+          report_timestamp: "{{ lookup('pipe', 'date -u +%Y-%m-%dT%H:%M:%SZ') }}"
+          ambiente: "{{ ambiente }}"
+          installed_kbs: "{{ kb_instalados | default([]) }}"
+          error_details: "{{ update_result.failure_msg | default(update_result.msg | default(omit)) }}"
+
+    #################################################################
+    # 5) Enviar resultado para API (no Windows via PowerShell)
+    #################################################################
+    - name: Enviar resultado para API
+      win_shell: |
+        $payload = @'
+        {{ update_payload | to_json }}
+        '@
+
+        Invoke-RestMethod -Uri '{{ api_endpoint }}' `
+                          -Method Post `
+                          -Body $payload `
+                          -ContentType 'application/json'
+      when: update_payload is defined
+
+    #################################################################
+    # 6) Debug opcional
+    #################################################################
+    - name: Debug do JSON enviado
+      debug:
+        var: update_payload
