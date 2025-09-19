@@ -53,7 +53,7 @@ Sistema gratuito e simples para **instalar atualizações** (Windows e Linux) co
 
 ```json
 {
-  "server_name": "HOWSUS01SEN",
+  "server_name": "SERVER001",
   "ip_address": "10.151.200.3",
   "update_status": "SUCCESS",  // SUCCESS | FAILED | NO_UPDATES_FOUND
   "installed_kbs": ["KB5034441","KB5035853"],
